@@ -55,6 +55,10 @@ vi.mock("@/lib/api-error", () => ({
       : null,
 }));
 
+vi.mock("@/lib/db/connection", () => ({
+  getDb: vi.fn(() => null),
+}));
+
 const { POST } = await import("@/app/api/chat/route");
 
 describe("api/chat (POST)", () => {
@@ -142,5 +146,15 @@ describe("api/chat (POST)", () => {
     await POST(req);
     expect(mockPushMessage).toHaveBeenCalledWith("s1", "user", "Hello");
     expect(mockPushMessage).toHaveBeenCalledWith("s1", "assistant", "This is a response from VIL");
+  });
+});
+
+describe("GET /api/chat/messages", () => {
+  it("returns empty array for missing sessionId", async () => {
+    const { GET } = await import("@/app/api/chat/messages/route");
+    const req = new Request("http://localhost/api/chat/messages");
+    const res = await GET(req);
+    const body = await res.json();
+    expect(body).toEqual([]);
   });
 });

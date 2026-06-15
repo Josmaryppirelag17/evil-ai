@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   handleApiError,
   handleRateLimitError,
+  checkHoneypot,
 } from "@/lib/api-error";
 
 describe("api-error", () => {
@@ -51,6 +52,20 @@ describe("api-error", () => {
       expect(res.status).toBe(429);
       const body = await res.json();
       expect(body.error).toContain("Demasiadas solicitudes");
+    });
+  });
+
+  describe("checkHoneypot", () => {
+    it("returns null when no honey", () => {
+      expect(checkHoneypot({ query: "hello" })).toBeNull();
+    });
+
+    it("returns 400 response when honey present", async () => {
+      const res = checkHoneypot({ _honey: "bot" });
+      expect(res).not.toBeNull();
+      expect(res!.status).toBe(400);
+      const body = await res!.json();
+      expect(body.error).toBe("Solicitud rechazada");
     });
   });
 });

@@ -393,3 +393,26 @@ describe("lib/auth", () => {
     });
   });
 });
+
+describe("lib/auth/audit", () => {
+  it("exports AUDIT_ACTIONS with expected actions", async () => {
+    const mod = await import("@/lib/auth/audit");
+    expect(mod.AUDIT_ACTIONS.REGISTER).toBe("register");
+    expect(mod.AUDIT_ACTIONS.SESSION_REVOKE).toBe("session_revoke");
+  });
+
+  it("logAuditEvent inserts audit log", async () => {
+    const mod = await import("@/lib/auth/audit");
+    await expect(
+      mod.logAuditEvent(mockDb as any, 1, "test_action", "127.0.0.1", "test-agent", { key: "val" }),
+    ).resolves.not.toThrow();
+  });
+
+  it("logAuditEvent handles db error silently", async () => {
+    const badDb = { insert: vi.fn(() => ({ values: vi.fn(() => Promise.reject(new Error("DB down"))) })) };
+    const mod = await import("@/lib/auth/audit");
+    await expect(
+      mod.logAuditEvent(badDb as any, 1, "test_action"),
+    ).resolves.not.toThrow();
+  });
+});

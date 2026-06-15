@@ -9,6 +9,7 @@ const mockGetSessionCookieConfig = vi.fn();
 const mockCreatePasswordResetToken = vi.fn();
 const mockResetPasswordWithToken = vi.fn();
 const mockCheck = vi.fn();
+const mockLogAuditEvent = vi.fn();
 
 vi.mock("@/lib/auth", () => ({
   registerUser: mockRegisterUser,
@@ -18,6 +19,11 @@ vi.mock("@/lib/auth", () => ({
   getSessionCookieConfig: mockGetSessionCookieConfig,
   createPasswordResetToken: mockCreatePasswordResetToken,
   resetPasswordWithToken: mockResetPasswordWithToken,
+}));
+
+vi.mock("@/lib/auth/audit", () => ({
+  AUDIT_ACTIONS: { SESSION_REVOKE: "session_revoke" },
+  logAuditEvent: mockLogAuditEvent,
 }));
 
 vi.mock("@/lib/rateLimit", () => ({
@@ -202,5 +208,48 @@ describe("POST /api/auth/reset-password", () => {
     const req = mockRequest({ token: "valid", password: "newpass123" });
     const res = await POST(req);
     expect(res.status).toBe(200);
+  });
+});
+
+describe("GET /api/auth/sessions", () => {
+  it("returns 401 when not authenticated", async () => {
+    mockGetSessionUser.mockResolvedValueOnce(null);
+    const { GET } = await import("@/app/api/auth/sessions/route");
+    const res = await GET();
+    expect(res.status).toBe(401);
+  });
+});
+
+describe("DELETE /api/auth/sessions", () => {
+  it("returns 401 when not authenticated", async () => {
+    mockGetSessionUser.mockResolvedValueOnce(null);
+    const { DELETE } = await import("@/app/api/auth/sessions/route");
+    const req = new Request("http://localhost/api/auth/sessions?sessionId=1");
+    const res = await DELETE(req);
+    expect(res.status).toBe(401);
+  });
+});
+
+describe("POST /api/user/sync", () => {
+  it("returns 401 when not authenticated", async () => {
+    mockGetSessionUser.mockResolvedValueOnce(null);
+    const { POST } = await import("@/app/api/user/sync/route");
+    const req = new Request("http://localhost/api/user/sync", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ sessionId: "s1" }),
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(401);
+  });
+});
+
+describe("GET /api/user/sessions", () => {
+  it("returns empty array when not authenticated", async () => {
+    mockGetSessionUser.mockResolvedValueOnce(null);
+    const { GET } = await import("@/app/api/user/sessions/route");
+    const res = await GET();
+    const body = await res.json();
+    expect(body).toEqual([]);
   });
 });
