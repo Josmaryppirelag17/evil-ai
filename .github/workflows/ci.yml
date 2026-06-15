@@ -78,7 +78,7 @@ jobs:
           retention-days: 7
 
       - name: SonarCloud Analysis
-        uses: SonarSource/sonarqube-scan-action@5e3e08f3526df17b8ad3593e6f3f1bf83ee4ba25 # v5.0.0
+        uses: SonarSource/sonarqube-scan-action@0303d6b62e310685c0e34d0b9cde218036885c4d # v5.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
