@@ -55,6 +55,7 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
   const [submitting, setSubmitting] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const firstInputRef = useRef<HTMLInputElement>(null);
+  const honeyRef = useRef("");
 
   const a = ctx.auth;
 
@@ -109,9 +110,9 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
       let result: { success: boolean; error?: string };
 
       if (tab === "signin") {
-        result = await login(email, password);
+        result = await login(email, password, honeyRef.current);
       } else {
-        result = await register(email, username, name, lastName, password);
+        result = await register(email, username, name, lastName, password, honeyRef.current);
       }
 
       if (result.success) {
@@ -200,6 +201,17 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          {/* Honeypot anti-spam (hidden from users, bots auto-fill) */}
+          <div aria-hidden="true" className="absolute -left-[9999px] opacity-0">
+            <input
+              tabIndex={-1}
+              autoComplete="off"
+              name="_honey"
+              type="text"
+              value={honeyRef.current}
+              onChange={(e) => { honeyRef.current = e.target.value; }}
+            />
+          </div>
           {/* Name + Last Name row */}
           {tab === "signup" && (
             <div className="flex gap-3">

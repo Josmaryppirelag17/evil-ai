@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -16,6 +16,7 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const honeyRef = useRef("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +37,7 @@ export default function ResetPasswordPage() {
       const res = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password }),
+        body: JSON.stringify({ token, password, _honey: honeyRef.current }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -94,6 +95,9 @@ export default function ResetPasswordPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-5">
+          <div aria-hidden="true" className="absolute -left-[9999px] opacity-0">
+            <input tabIndex={-1} autoComplete="off" name="_honey" type="text" value={honeyRef.current} onChange={(e) => { honeyRef.current = e.target.value; }} />
+          </div>
           <div>
             <label htmlFor="new-password" className="font-mono text-[10px] text-cyber-cyan/70 block mb-1.5">
               {a.newPassword}

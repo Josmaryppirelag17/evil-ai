@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { loginUser, getSessionCookieConfig } from "@/lib/auth";
 import { createRateLimiter } from "@/lib/rateLimit";
+import { checkHoneypot } from "@/lib/api-error";
 
 const loginSchema = z.object({
   email: z.string().min(1).max(255),
   password: z.string().min(1).max(128),
+  _honey: z.string().optional(),
 });
 
 const rateLimiter = createRateLimiter({
@@ -24,6 +26,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
+
+    const honeyResponse = checkHoneypot(body);
+    if (honeyResponse) return honeyResponse;
+
     const parsed = loginSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(

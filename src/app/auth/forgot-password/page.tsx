@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTranslation } from "@/lib/i18n";
 import Link from "next/link";
 
@@ -12,6 +12,7 @@ export default function ForgotPasswordPage() {
   const [resetUrl, setResetUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const honeyRef = useRef("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +25,7 @@ export default function ForgotPasswordPage() {
       const res = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, _honey: honeyRef.current }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -56,6 +57,9 @@ export default function ForgotPasswordPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-5">
+          <div aria-hidden="true" className="absolute -left-[9999px] opacity-0">
+            <input tabIndex={-1} autoComplete="off" name="_honey" type="text" value={honeyRef.current} onChange={(e) => { honeyRef.current = e.target.value; }} />
+          </div>
           {!message && (
             <>
               <p className="font-mono text-[11px] text-gray-400 leading-relaxed">

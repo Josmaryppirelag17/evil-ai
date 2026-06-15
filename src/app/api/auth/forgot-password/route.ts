@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createPasswordResetToken } from "@/lib/auth";
 import { createRateLimiter } from "@/lib/rateLimit";
+import { checkHoneypot } from "@/lib/api-error";
 
 const schema = z.object({
   email: z.string().email().max(255),
+  _honey: z.string().optional(),
 });
 
 const rateLimiter = createRateLimiter({ windowMs: 60 * 1000, limit: 3 });
@@ -17,6 +19,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
+
+    const honeyResponse = checkHoneypot(body);
+    if (honeyResponse) return honeyResponse;
+
     const parsed = schema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });

@@ -34,8 +34,8 @@ interface User {
 interface AuthContextValue {
   user: User | null;
   isLoading: boolean;
-  login: (emailOrUsername: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  register: (email: string, username: string, name: string, lastName: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (emailOrUsername: string, password: string, _honey?: string) => Promise<{ success: boolean; error?: string }>;
+  register: (email: string, username: string, name: string, lastName: string, password: string, _honey?: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   syncSession: () => Promise<void>;
 }
@@ -70,12 +70,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await syncCurrentSession();
   }, []);
 
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string, _honey = "") => {
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, _honey }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -89,12 +89,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [fetchSession]);
 
-  const register = useCallback(async (email: string, username: string, name: string, lastName: string, password: string) => {
+  const register = useCallback(async (email: string, username: string, name: string, lastName: string, password: string, _honey = "") => {
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, username, name, lastName, password }),
+        body: JSON.stringify({ email, username, name, lastName, password, _honey }),
       });
       const data = await res.json();
       if (res.ok) {

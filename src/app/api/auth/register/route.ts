@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { registerUser } from "@/lib/auth";
 import { createRateLimiter } from "@/lib/rateLimit";
+import { checkHoneypot } from "@/lib/api-error";
 
 const registerSchema = z.object({
   email: z.string().email("Invalid email").max(255),
@@ -9,6 +10,7 @@ const registerSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
   lastName: z.string().min(1, "Last name is required").max(100),
   password: z.string().min(8, "Password must be at least 8 characters").max(128),
+  _honey: z.string().optional(),
 });
 
 const rateLimiter = createRateLimiter({
@@ -27,6 +29,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
+
+    const honeyResponse = checkHoneypot(body);
+    if (honeyResponse) return honeyResponse;
+
     const parsed = registerSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(

@@ -7,6 +7,8 @@ import { cookies } from "next/headers";
 const SESSION_COOKIE = "vil_session";
 const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000;
 const SALT_ROUNDS = 12;
+const MAX_FAILED_ATTEMPTS = 5;
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000;
 
 function generateToken(): string {
   const bytes = new Uint8Array(32);
@@ -77,10 +79,28 @@ export async function loginUser(
 
     const user = result[0];
     if (!user) return { success: false, error: "Invalid email/username or password" };
+
+    if (user.lockedUntil && new Date() < user.lockedUntil) {
+      const remaining = Math.ceil((user.lockedUntil.getTime() - Date.now()) / 60000);
+      return { success: false, error: `Account locked. Try again in ${remaining} minutes.` };
+    }
+
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (!valid) {
+      const newAttempts = (user.failedAttempts ?? 0) + 1;
+      const updates: Record<string, unknown> = { failedAttempts: newAttempts };
+      if (newAttempts >= MAX_FAILED_ATTEMPTS) {
+        updates.lockedUntil = new Date(Date.now() + LOCKOUT_DURATION_MS);
+      }
+      await db.update(users).set(updates).where(eq(users.id, user.id));
       return { success: false, error: "Invalid email/username or password" };
     }
+
+    await db.update(users).set({
+      failedAttempts: 0,
+      lockedUntil: null,
+      lastLoginAt: new Date(),
+    }).where(eq(users.id, user.id));
 
     const token = generateToken();
     const expiresAt = new Date(Date.now() + SESSION_DURATION_MS);
