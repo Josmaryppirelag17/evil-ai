@@ -18,6 +18,14 @@
 - CSP nonce strict-dynamic
 - Migración a Next.js 16 con proxy middleware
 
+## Analytics
+
+- **Google Analytics 4** opt-in via `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+- `GAScript` component in atoms: renders null if env var empty, else loads gtag.js + init script
+- CSP whitelist: `www.google-analytics.com` + `www.googletagmanager.com` en `connect-src`
+- Componente `"use client"` renderizado en root layout `<body>`
+- E2E: verificar que con ID vacío no se renderizan scripts
+
 ## Testing
 
 - 27 archivos de test con thresholds altos (90%)

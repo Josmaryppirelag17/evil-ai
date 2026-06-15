@@ -13,10 +13,10 @@
 | Tutorial onboarding | Tarjetas interactivas en primera visita |
 | CSP nonce | strict-dynamic |
 | Rate limiting | Chat 10/min, Browser 5/min, Login 10/min |
+| Google Analytics | GA4 opt-in via env var, CSP whitelist |
 
 ## Pendientes
 
 | Feature | Prioridad |
 |---|---|
-| Analytics | Baja |
 | GPQF Level 6 (Freeze) | Baja |
