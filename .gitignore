@@ -53,7 +53,3 @@ coverage/
 .config/
 .vercel
 .env*
-
-# Guía personal del desarrollador
-guia.md
-guia.ms

@@ -43,7 +43,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Install Vercel CLI
-        run: pnpm add -g vercel@latest
+        run: npm install -g vercel@latest
 
       - name: Pull Vercel Environment
         run: vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
@@ -93,7 +93,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Install Vercel CLI
-        run: pnpm add -g vercel@latest
+        run: npm install -g vercel@latest
 
       - name: Pull Vercel Environment
         run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
@@ -137,7 +137,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Install Vercel CLI
-        run: pnpm add -g vercel@latest
+        run: npm install -g vercel@latest
 
       - name: Rollback to previous deployment
         run: vercel rollback --token="$VERCEL_TOKEN" --yes

@@ -14,12 +14,7 @@
     "allowJs": true,
     "jsx": "react-jsx",
     "paths": {
-      "@/*": ["./src/*"],
-      "@core/*": ["./src/core/*"],
-      "@components/*": ["./src/components/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@infrastructure/*": ["./src/infrastructure/*"]
+      "@/*": ["./src/*"]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true,

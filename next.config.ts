@@ -44,9 +44,14 @@ const nextConfig: NextConfig = {
 export default withSentryConfig(nextConfig, {
   org: "student-jss",
   project: "vil-nextjs",
+  authToken: process.env.SENTRY_AUTH_TOKEN,
   silent: !process.env.CI,
   widenClientFileUpload: true,
   hideSourceMaps: true,
-  disableLogger: true,
-  automaticVercelMonitors: true,
+  webpack: {
+    treeshake: {
+      removeDebugLogging: true,
+    },
+    automaticVercelMonitors: true,
+  },
 });
