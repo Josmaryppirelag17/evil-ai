@@ -3,10 +3,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import type { Message, BrowserTabState, RecommendationPage } from '@/types';
 import { Logger } from '@/infrastructure/logger/Logger';
+import { SESSION_KEY } from '@/context/AuthContext';
 
 const logger = new Logger("useChat");
-
-const SESSION_KEY = "vil_chat_session";
 
 function getStoredSessionId(): string {
   if (typeof window === "undefined") return "";
@@ -209,7 +208,6 @@ export function useChat() {
   }, []);
 
   const streamChat = useCallback(async (msg: string) => {
-    if (isStreaming) return;
     if (currentAbort.current) currentAbort.current.abort();
     currentAbort.current = new AbortController();
     setIsStreaming(true);
@@ -315,7 +313,7 @@ export function useChat() {
         speak(fullText);
       }
     }
-  }, [isStreaming, addMessage, createRecommendationPage, speak]);
+  }, [addMessage, createRecommendationPage, speak]);
 
   const handleSendPrompt = useCallback((e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -417,10 +415,6 @@ export function useChat() {
     }
   }, [browserState, navigateToUrl]);
 
-  const handleOpenRecommendation = useCallback((url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }, []);
-
   const switchSession = useCallback((newSessionId: string) => {
     if (newSessionId === sessionId.current) return;
     sessionId.current = newSessionId;
@@ -478,6 +472,5 @@ export function useChat() {
     handleBrowserForward,
     handleBrowserHome,
     handleBrowserRefresh,
-    handleOpenRecommendation,
   };
 }

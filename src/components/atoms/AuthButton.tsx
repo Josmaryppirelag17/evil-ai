@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { useTranslation } from "@/context/I18nProvider";
+import { useTranslation } from "@/lib/i18n";
 import { AuthModal } from "@/components/molecules/AuthModal";
 import { RetroButton } from "@/components/atoms/RetroButton";
 

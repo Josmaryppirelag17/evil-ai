@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { useTranslation } from "@/context/I18nProvider";
+import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/utils/utils";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import Link from "next/link";
 
 interface AuthModalProps {
@@ -69,40 +70,13 @@ export function AuthModal({ open, onClose }: AuthModalProps) {
     setSubmitting(false);
   }, []);
 
+  useFocusTrap(modalRef, onClose, open);
+
   useEffect(() => {
     if (!open) return;
     resetForm();
     setTimeout(() => firstInputRef.current?.focus(), 50);
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-        return;
-      }
-      if (e.key === "Tab") {
-        const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
-        if (!focusable || focusable.length === 0) return;
-        const first = focusable[0]!;
-        const last = focusable[focusable.length - 1]!;
-        if (e.shiftKey) {
-          if (document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          }
-        } else {
-          if (document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
-        }
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open, onClose, resetForm]);
+  }, [open, resetForm]);
 
   function validateSignup(): FieldErrors {
     const errors: FieldErrors = {};

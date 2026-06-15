@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getChatCompletion, type GroqMessage } from "@/lib/groq";
 import { BrowserSimulateRequestSchema } from "@/types";
 import { createRateLimiter } from "@/lib/rateLimit";
-import { handleApiError, handleRateLimitError } from "@/lib/api-error";
+import { handleApiError, handleRateLimitError, checkHoneypot } from "@/lib/api-error";
 
 const browserSimulateRateLimiter = createRateLimiter({
   windowMs: 60 * 1000,
@@ -18,12 +18,8 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
 
-    if (body._honey) {
-      return NextResponse.json(
-        { error: "Solicitud rechazada" },
-        { status: 400 }
-      );
-    }
+    const honeyResponse = checkHoneypot(body);
+    if (honeyResponse) return honeyResponse;
 
     const result = BrowserSimulateRequestSchema.safeParse(body);
 

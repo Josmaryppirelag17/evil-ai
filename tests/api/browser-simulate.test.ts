@@ -35,6 +35,13 @@ vi.mock("@/lib/api-error", () => ({
       status: 429,
       headers: { "content-type": "application/json" },
     }),
+  checkHoneypot: (body: Record<string, unknown>) =>
+    body._honey
+      ? new Response(JSON.stringify({ error: "Solicitud rechazada" }), {
+          status: 400,
+          headers: { "content-type": "application/json" },
+        })
+      : null,
 }));
 
 const { POST } = await import("@/app/api/browser/simulate/route");

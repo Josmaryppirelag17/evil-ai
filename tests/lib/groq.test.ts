@@ -89,8 +89,9 @@ describe("groq", () => {
       const promise = getChatCompletion([
         { role: "user", content: "Hi" },
       ]);
+      const onRejected = expect(promise).rejects.toThrow("Groq API error");
       await vi.advanceTimersByTimeAsync(10_000);
-      await expect(promise).rejects.toThrow("Groq API error");
+      await onRejected;
       expect(fetchMock).toHaveBeenCalledTimes(4);
       vi.useRealTimers();
     });
@@ -127,10 +128,11 @@ describe("groq", () => {
       );
 
       const promise = getChatCompletion([{ role: "user", content: "Hi" }]);
+      const onRejected = expect(promise).rejects.toThrow("timeout");
 
       await vi.advanceTimersByTimeAsync(200_000);
 
-      await expect(promise).rejects.toThrow("timeout");
+      await onRejected;
 
       vi.useRealTimers();
     });

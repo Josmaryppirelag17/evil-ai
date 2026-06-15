@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
-const SESSION_KEY = "vil_chat_session";
+export const SESSION_KEY = "vil_chat_session";
 
 export function setPendingSessionId(id: string | null) {
   if (id && typeof window !== "undefined") {

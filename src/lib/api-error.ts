@@ -34,14 +34,11 @@ export function handleRateLimitError(): NextResponse {
   );
 }
 
-export class ApiError extends Error {
-  readonly code: string;
-  readonly statusCode: number;
-
-  constructor(message: string, statusCode: number, code = "API_ERROR") {
-    super(message);
-    this.name = "ApiError";
-    this.code = code;
-    this.statusCode = statusCode;
+export function checkHoneypot(body: Record<string, unknown>): NextResponse | null {
+  if (body._honey) {
+    return NextResponse.json({ error: "Solicitud rechazada" }, { status: 400 });
   }
+  return null;
 }
+
+

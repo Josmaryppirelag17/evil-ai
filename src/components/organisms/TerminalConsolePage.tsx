@@ -11,9 +11,7 @@ import { TutorialCards } from '@/components/molecules/TutorialCards';
 import { AuthButton } from '@/components/atoms/AuthButton';
 import { AuthModal } from '@/components/molecules/AuthModal';
 import { SessionList } from '@/components/molecules/SessionList';
-import { useAuth } from '@/context/AuthContext';
-
-const SESSION_KEY = "vil_chat_session";
+import { useAuth, SESSION_KEY } from '@/context/AuthContext';
 
 export const TerminalConsolePage: React.FC = () => {
   const [tutorialKey, setTutorialKey] = React.useState(0);

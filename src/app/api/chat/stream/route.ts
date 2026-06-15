@@ -4,7 +4,7 @@ import { VIL_INSTRUCTION } from "@/lib/gemini";
 import { getSession, pushMessage } from "@/lib/sessions";
 import { getSessionUser } from "@/lib/auth";
 import { createRateLimiter } from "@/lib/rateLimit";
-import { handleApiError, handleRateLimitError } from "@/lib/api-error";
+import { handleApiError, handleRateLimitError, checkHoneypot } from "@/lib/api-error";
 
 export const runtime = "nodejs";
 
@@ -21,14 +21,10 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { query, session_id, _honey } = body;
+    const { query, session_id } = body;
 
-    if (_honey) {
-      return new Response(JSON.stringify({ error: "Solicitud rechazada" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
+    const honeyResponse = checkHoneypot(body);
+    if (honeyResponse) return honeyResponse;
 
     if (!query) {
       return new Response(JSON.stringify({ error: "Consulta vacía" }), {

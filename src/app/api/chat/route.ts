@@ -5,7 +5,7 @@ import { getSession, pushMessage } from "@/lib/sessions";
 import { getSessionUser } from "@/lib/auth";
 import { ChatRequestSchema } from "@/types";
 import { createRateLimiter } from "@/lib/rateLimit";
-import { handleApiError, handleRateLimitError } from "@/lib/api-error";
+import { handleApiError, handleRateLimitError, checkHoneypot } from "@/lib/api-error";
 
 const chatRateLimiter = createRateLimiter({
   windowMs: 60 * 1000,
@@ -21,12 +21,8 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
 
-    if (body._honey) {
-      return NextResponse.json(
-        { error: "Solicitud rechazada" },
-        { status: 400 }
-      );
-    }
+    const honeyResponse = checkHoneypot(body);
+    if (honeyResponse) return honeyResponse;
 
     const result = ChatRequestSchema.safeParse(body);
 

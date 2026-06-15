@@ -3,7 +3,7 @@ import { Geist, JetBrains_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import { cn } from "@/utils/utils";
-import { I18nProvider } from "@/context/I18nProvider";
+import { I18nProvider } from "@/lib/i18n";
 import { AuthProvider } from "@/context/AuthContext";
 import { AuthButton } from "@/components/atoms/AuthButton";
 import { StructuredData } from "@/components/atoms/StructuredData";
