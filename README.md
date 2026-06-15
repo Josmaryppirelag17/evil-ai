@@ -102,6 +102,10 @@
 | `pnpm lint` | ESLint (flat config) |
 | `pnpm preflight` | typecheck + lint + test (CI ready) |
 | `pnpm format` | Format code with Prettier |
+| `pnpm jscpd` | Copy-paste detection (threshold: 10%) |
+| `pnpm jscpd:report` | Generate HTML duplication report |
+| `pnpm load:test` | k6 load test (requires k6 CLI) |
+| `pnpm load:test:staging` | k6 load test against staging |
 
 ---
 

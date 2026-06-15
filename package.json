@@ -20,7 +20,11 @@
     "format:check": "prettier --check .",
     "audit:observatory": "echo 'Visita https://observatory.mozilla.org y analiza tu URL desplegada'",
     "audit:all": "pnpm typecheck && pnpm test && pnpm build",
-    "sonar": "sonar-scanner"
+    "sonar": "sonar-scanner",
+    "jscpd": "jscpd",
+    "jscpd:report": "jscpd --output reports/duplication --reporters html",
+    "load:test": "k6 run tests/load/chat-load.test.js",
+    "load:test:staging": "k6 run -e BASE_URL=https://vil-assistant.vercel.app tests/load/chat-load.test.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -52,6 +56,7 @@
     "@vitest/coverage-v8": "^4.1.8",
     "drizzle-kit": "^0.31.10",
     "eslint": "^9.39.4",
+    "jscpd": "^5.0.9",
     "jsdom": "^29.1.1",
     "tailwindcss": "^4.1.14",
     "typescript": "~5.8.2",

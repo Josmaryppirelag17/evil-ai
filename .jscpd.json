@@ -1,0 +1,21 @@
+{
+  "threshold": 10,
+  "reporters": ["console", "html"],
+  "output": "reports/duplication",
+  "ignore": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/reports/**",
+    "**/tests/load/**",
+    "**/pnpm-lock.yaml",
+    "**/src/lib/i18n/translations.ts",
+    "**/*.d.ts",
+    "**/.github/workflows/*.yml"
+  ],
+  "absolute": true,
+  "gitignore": true,
+  "minLines": 5,
+  "maxLines": 500,
+  "maxSize": "100kb"
+}

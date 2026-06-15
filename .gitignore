@@ -43,6 +43,9 @@ Thumbs.db
 # Carpeta de tests (si no quieres subir reportes de cobertura)
 coverage/
 
+# Reportes de herramientas (jscpd, k6, etc.)
+reports/
+
 # Archivos personales que detectó Git anteriormente
 .bash_history
 .bash_logout
