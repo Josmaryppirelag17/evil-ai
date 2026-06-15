@@ -38,11 +38,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@core": path.resolve(__dirname, "./src/core"),
-      "@components": path.resolve(__dirname, "./src/components"),
-      "@hooks": path.resolve(__dirname, "./src/hooks"),
-      "@utils": path.resolve(__dirname, "./src/utils"),
-      "@infrastructure": path.resolve(__dirname, "./src/infrastructure"),
     },
   },
 });
