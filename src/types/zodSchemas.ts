@@ -13,20 +13,6 @@ export const ChatRequestSchema = z.object({
   messages: z.array(ChatMessageSchema).optional(),
 });
 
-// Esquema para respuestas de chat (para validación de salida)
-export const ChatResponseSchema = z.object({
-  text: z.string(),
-  groundingSources: z.array(
-    z.object({
-      title: z.string(),
-      uri: z.string().url(),
-      snippet: z.string(),
-      index: z.number(),
-    })
-  ).optional(),
-  searchQueries: z.array(z.string()).optional(),
-});
-
 // Esquema para solicitud de sugerencias
 export const SuggestionsRequestSchema = z.object({
   context: z.string().optional(),

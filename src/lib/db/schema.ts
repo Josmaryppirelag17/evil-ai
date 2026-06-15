@@ -4,7 +4,6 @@ import {
   text,
   timestamp,
   pgSchema,
-  real,
   jsonb,
   integer,
   boolean,
@@ -31,19 +30,6 @@ export const messages = ai.table("messages", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
   sources: jsonb("sources").$type<Array<{ title: string; url: string }>>(),
   suggestions: jsonb("suggestions").$type<string[]>(),
-});
-
-export const preferences = ai.table("preferences", {
-  id: serial("id").primaryKey(),
-  sessionId: varchar("session_id", { length: 64 })
-    .notNull()
-    .unique()
-    .references(() => sessions.sessionId, { onDelete: "cascade" }),
-  locale: varchar("locale", { length: 5 }).default("es"),
-  selectedVoice: varchar("selected_voice", { length: 100 }),
-  speechRate: real("speech_rate").default(1.0),
-  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
 });
 
 export const users = ai.table("users", {
@@ -100,14 +86,4 @@ export const authSessions = ai.table("auth_sessions", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
 
-export type Session = typeof sessions.$inferSelect;
-export type NewSession = typeof sessions.$inferInsert;
-export type Message = typeof messages.$inferSelect;
-export type NewMessage = typeof messages.$inferInsert;
-export type Preference = typeof preferences.$inferSelect;
-export type NewPreference = typeof preferences.$inferInsert;
-export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
-export type AuthSession = typeof authSessions.$inferSelect;
-export type NewAuthSession = typeof authSessions.$inferInsert;
-export type AuditLog = typeof auditLogs.$inferSelect;
+

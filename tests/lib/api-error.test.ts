@@ -2,7 +2,6 @@ import { describe, it, expect } from "vitest";
 import {
   handleApiError,
   handleRateLimitError,
-  ApiError,
 } from "@/lib/api-error";
 
 describe("api-error", () => {
@@ -52,21 +51,6 @@ describe("api-error", () => {
       expect(res.status).toBe(429);
       const body = await res.json();
       expect(body.error).toContain("Demasiadas solicitudes");
-    });
-  });
-
-  describe("ApiError class", () => {
-    it("creates error with code and status", () => {
-      const err = new ApiError("Not found", 404, "NOT_FOUND");
-      expect(err.message).toBe("Not found");
-      expect(err.statusCode).toBe(404);
-      expect(err.code).toBe("NOT_FOUND");
-      expect(err.name).toBe("ApiError");
-    });
-
-    it("uses default code", () => {
-      const err = new ApiError("fail", 500);
-      expect(err.code).toBe("API_ERROR");
     });
   });
 });

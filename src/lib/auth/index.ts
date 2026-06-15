@@ -147,12 +147,6 @@ export async function logoutUser(): Promise<void> {
   }
 }
 
-async function generateResetTokenString(): Promise<string> {
-  const bytes = new Uint8Array(32);
-  crypto.getRandomValues(bytes);
-  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
-}
-
 export async function createPasswordResetToken(
   email: string,
 ): Promise<{ success: true; resetToken: string; resetUrl: string } | { success: false; error: string }> {
@@ -167,7 +161,7 @@ export async function createPasswordResetToken(
 
     const user = userResult[0];
     if (!user) return { success: false, error: "No account found with that email" };
-    const token = await generateResetTokenString();
+    const token = generateToken();
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
     await db.insert(passwordResetTokens).values({

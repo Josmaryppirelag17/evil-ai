@@ -1,6 +1,6 @@
 const SERPER_URL = "https://google.serper.dev/search";
 
-export interface GoogleSearchResult {
+interface GoogleSearchResult {
   title: string;
   link: string;
   snippet: string;

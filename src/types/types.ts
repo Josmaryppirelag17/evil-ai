@@ -24,13 +24,6 @@ export interface BrowserTabState {
   viewMode: 'rendered' | 'matrix' | 'ascii' | 'hex';
 }
 
-export interface ChatSessionState {
-  messages: Message[];
-  isGenerating: boolean;
-  isSpeaking: boolean;
-  activeQuery: string;
-}
-
 export interface RecommendationPage {
   id: string;
   query: string;
