@@ -44,7 +44,7 @@ const nextConfig: NextConfig = {
 export default withSentryConfig(nextConfig, {
   org: "student-jss",
   project: "vil-nextjs",
-  authToken: process.env.SENTRY_AUTH_TOKEN,
+  ...(process.env.SENTRY_AUTH_TOKEN ? { authToken: process.env.SENTRY_AUTH_TOKEN } : {}),
   silent: !process.env.CI,
   widenClientFileUpload: true,
   hideSourceMaps: true,
