@@ -14,6 +14,7 @@
 | CSP nonce | strict-dynamic |
 | Rate limiting | Chat 10/min, Browser 5/min, Login 10/min |
 | Google Analytics | GA4 opt-in via env var, CSP whitelist |
+| Sentry | Error tracking con `withSentryConfig`, 3 configs client/edge/server |
 
 ## Pendientes
 

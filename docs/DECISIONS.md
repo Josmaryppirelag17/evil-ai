@@ -26,6 +26,15 @@
 - Componente `"use client"` renderizado en root layout `<body>`
 - E2E: verificar que con ID vacío no se renderizan scripts
 
+## Error Tracking
+
+- **Sentry** via `@sentry/nextjs` con `withSentryConfig` en `next.config.ts`
+- `instrumentation.ts` con `register()` y `onRequestError`
+- Tres configs: client (replays), edge (server), server (DSN prioritario)
+- `beforeSend` suprime envíos en desarrollo; `tracesSampleRate` 0.25 client / 0.1 edge / 0.5 server en prod
+- CSP whitelist: `*.ingest.sentry.io` en `connect-src` (producción)
+- Página de verificación: `/sentry-example-page`
+
 ## Testing
 
 - 27 archivos de test con thresholds altos (90%)
