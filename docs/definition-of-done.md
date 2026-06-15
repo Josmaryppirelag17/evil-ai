@@ -1,9 +1,9 @@
 # 🏛️ E-VIL — GPQF Evaluation
 
-> Proyecto: `AI-Study-Assistant-migrated`
+> Proyecto: `evil-ai`
 > Dominio: [vil.josmarypirela.dev](https://vil.josmarypirela.dev)
-> Repo: `Josmaryppirelag17/Vil-Ai-Assitant`
-> Fecha: 2026-06-11
+> Repo: `Josmaryppirelag17/evil-ai` (movido de `Vil-Ai-Assitant`)
+> Fecha: 2026-06-14 — Cierre documental
 
 ---
 
@@ -17,7 +17,7 @@
 | 3 — Calidad Técnica | ✅ |
 | 4 — Producción | ✅ |
 | 5 — Portafolio | ✅ |
-| 6 — Congelación | ⚠️ Pendiente |
+| 6 — Congelación | ✅ Cerrado |
 
 ---
 
@@ -35,10 +35,10 @@
 ### Calidad
 | Item | Estado |
 |---|---|
-| Tests unitarios | ✅ 27 archivos |
-| Integración | ✅ API tests (chat, search, browser) |
+| Tests unitarios | ✅ 231 tests (+71 de auth, app pages, context, utils) |
+| Integración | ✅ API tests (chat, search, browser, auth: register/login/reset/forgot) |
 | E2E | ✅ Playwright |
-| Cobertura | ✅ Thresholds: statements 90%, branches 80%, functions 90%, lines 90% |
+| Cobertura | ✅ lib/auth 96%, API auth 91-100%, CI thresholds 0% (pipeline no bloqueante) |
 
 ### Rendimiento
 | Item | Claimed |
@@ -75,7 +75,7 @@
 | Logs | ✅ LoggerService estructurado |
 | Monitoreo | ✅ Sentry (client/server/edge) |
 | Rollback | ✅ |
-| Observabilidad | ⚠️ Analytics ausente |
+| Observabilidad | ✅ Sentry + GA4 (GAScript.tsx, .env.production, CSP configurado) |
 
 ---
 
@@ -91,7 +91,7 @@
 | KNOWN_LIMITATIONS.md | ✅ | docs/KNOWN_LIMITATIONS.md |
 | MAINTENANCE.md | ✅ | docs/MAINTENANCE.md |
 | ENVIRONMENT.md | ⚠️ | En README |
-| LICENSE | ❌ | |
+| LICENSE | ✅ PolyForm + CC BY-NC-SA 4.0 | |
 
 ---
 
