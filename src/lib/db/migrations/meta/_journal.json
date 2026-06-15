@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1780890639387,
+      "tag": "0000_rare_vengeance",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1781042495459,
+      "tag": "0001_tan_ultimates",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1781106064021,
+      "tag": "0002_low_lilith",
+      "breakpoints": true
+    }
+  ]
+}
