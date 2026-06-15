@@ -1,6 +1,6 @@
 # Project Status
 
-> Última actualización: 2026-06-11
+> Última actualización: 2026-06-14
 
 ---
 
@@ -53,8 +53,8 @@
 | Lighthouse Best Practices | 100/100 |
 | Lighthouse SEO | 100/100 |
 | Mozilla Observatory | A+ |
-| Tests | ~90 unit + 5 E2E |
-| Cobertura thresholds | 90% statements/lines |
+| Tests | 231 unit + 5 E2E |
+| Coverage lib/auth | 96% |
 | LCP Desktop | 0.6s |
 | CLS | 0 |
 
