@@ -3,7 +3,7 @@
 > AI assistant with villain personality, Google search, cyber-terminal virtual browser and user authentication.
 
 [![Sentry](https://img.shields.io/badge/monitoring-Sentry-362D59)](https://sentry.io)
-[![Tests](https://img.shields.io/badge/tests-150%20passed-brightgreen)]()
+[![Tests](https://img.shields.io/badge/tests-222%20passed-brightgreen)]()
 [![Accessibility](https://img.shields.io/badge/a11y-role%2Faria--label%2Fskip--to--content-brightgreen)]()
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Josmaryppirelag17_Vil-Ai-Assitant&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Josmaryppirelag17_Vil-Ai-Assitant)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Josmaryppirelag17_Vil-Ai-Assitant&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Josmaryppirelag17_Vil-Ai-Assitant)
@@ -21,7 +21,7 @@
 
 | Category | Score (Desktop) | Score (Mobile) | Tool |
 |---|---|---|---|
-| **Performance** | 99/100 | 92/100 | PageSpeed Insights |
+| **Performance** | 95/100 | 100/100 | PageSpeed Insights |
 | **Accessibility** | 96/100 | 96/100 | PageSpeed Insights |
 | **Best Practices** | 100/100 | 100/100 | PageSpeed Insights |
 | **SEO** | 100/100 | 100/100 | PageSpeed Insights |
@@ -40,10 +40,10 @@
 | Metric | Value | Rating |
 |---|---|---|
 | **First Contentful Paint** | 0.2 s | ✅ Good |
-| **Largest Contentful Paint** | 0.6 s | ✅ Good |
-| **Total Blocking Time** | 80 ms | ✅ Good |
-| **Cumulative Layout Shift** | 0 | ✅ Good |
-| **Speed Index** | 1.2 s | ✅ Good |
+| **Largest Contentful Paint** | 0.5 s | ✅ Good |
+| **Total Blocking Time** | 20 ms | ✅ Good |
+| **Cumulative Layout Shift** | 0.014 | ✅ Good |
+| **Speed Index** | 0.8 s | ✅ Good |
 
 ### Mobile
 
@@ -51,9 +51,9 @@
 |---|---|---|
 | **First Contentful Paint** | 0.9 s | ✅ Good |
 | **Largest Contentful Paint** | 2.6 s | ✅ Good |
-| **Total Blocking Time** | 0 ms | ✅ Good |
-| **Cumulative Layout Shift** | 0 | ✅ Good |
-| **Speed Index** | 4.5 s | ✅ Good |
+| **Total Blocking Time** | 10 ms | ✅ Good |
+| **Cumulative Layout Shift** | 8.086 | ✅ Good |
+| **Speed Index** | 3.0 s | ✅ Good |
 
 > 🔗 [PageSpeed Insights report](https://pagespeed.web.dev/analysis/https-vil-josmarypirela-dev/mhk08ae5ph?form_factor=desktop)
 ---
@@ -96,7 +96,7 @@
 |---|---|
 | `pnpm dev` | Start development server |
 | `pnpm build` | Build for production (Turborepo with cache) |
-| `pnpm test` | Unit tests with coverage (150 tests) |
+| `pnpm test` | Unit tests with coverage (222 tests) |
 | `pnpm test:e2e` | End-to-end tests with Playwright |
 | `pnpm typecheck` | TypeScript type checking |
 | `pnpm lint` | ESLint (flat config) |
@@ -108,7 +108,7 @@
 ## 🧪 Tests
 
 ```bash
-pnpm test        # Unit + integration (Vitest) — 150 tests
+pnpm test        # Unit + integration (Vitest) — 222 tests
 pnpm test:e2e    # E2E (Playwright)
 pnpm preflight   # typecheck + lint + test (CI pipeline)
 ```
@@ -128,8 +128,8 @@ src/
 │   ├── molecules/     # AuthModal, AiAvatar, ChatList, RecommendationsPanel
 │   ├── organisms/     # TerminalConsolePage, ChatMessages, SearchResults, VirtualBrowserWindow
 │   └── templates/     # SplitLayout (30/70)
-├── context/           # AuthContext, I18nProvider
-├── hooks/             # useChat, useSpeechRecognition, useBrowserSimulation
+├── context/           # AuthContext
+├── hooks/             # useChat, useFocusTrap, useSpeechRecognition, useBrowserSimulation
 ├── infrastructure/    # api/, database/, logger/, storage/
 ├── lib/               # auth service, groq, rateLimit, db schema, Zod schemas
 └── types/             # Shared types

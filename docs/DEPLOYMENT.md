@@ -21,6 +21,6 @@ GitHub Actions en `.github/workflows/`:
 ## Variables requeridas
 
 ```bash
-DATABASE_URL, APP_URL, NEXT_PUBLIC_SENTRY_DSN,
+DATABASE_URL, APP_URL, NEXT_PUBLIC_SENTRY_DSN, SENTRY_AUTH_TOKEN,
 GROQ_API_KEY, SERPER_API_KEY
 ```

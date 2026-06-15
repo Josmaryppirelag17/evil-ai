@@ -4,6 +4,27 @@
 
 ---
 
+## [2.1.0] — 2026-06-15
+
+### Removed
+- Tabla `preferences` de schema DB (nunca usada en source)
+- Type exports muertos de `schema.ts` (Session, NewSession, Message, etc.)
+- `context/I18nProvider.tsx` redundante (mero re-export de `@/lib/i18n`)
+- Path aliases muertos en `tsconfig.json` (`@core/*`, `@components/*`, etc.)
+- `components.json` con paths rotos (`@/lib/utils` inexistente)
+
+### Changed
+- `generateToken`/`generateResetTokenString` unificadas (eran idénticas)
+- `SESSION_KEY` consolidada en `AuthContext.tsx` y compartida via import
+- Focus trap keyboard handler extraído a `useFocusTrap` hook (estaba duplicado 3x)
+- Honeypot check extraído a `checkHoneypot()` en `api-error.ts` (duplicado en 3 routes)
+- Migrados imports de `@/context/I18nProvider` a `@/lib/i18n`
+
+### Added
+- `authToken: process.env.SENTRY_AUTH_TOKEN` en `next.config.ts`
+
+---
+
 ## [2.0.0] — 2026-06-11
 
 ### Cerrado
